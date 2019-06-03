@@ -50,10 +50,10 @@ class TweetsController < ApplicationController
 
   patch '/tweets/:id' do
     if logged_in?
-      if params[:content] == ""
+      @tweet = Tweet.find(params[:id])
+      if params[:content] == "" || params[:content] != @tweet.content
         redirect to "/tweets/#{params[:id]}/edit"
       else
-        @tweet = Tweet.find(params[:id])
         if @tweet.user == current_user
           if @tweet.content != params[:content]
             @tweet.content = params[:content]
